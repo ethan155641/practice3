@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 
 class FinanceCalc
@@ -103,5 +103,28 @@ class FinanceCalc
                          (Math.Pow(1 + monthlyRate, months) - 1);
             Console.WriteLine($"Monthly Payment (EMI): {emi:F2}");
         }
+    }
+
+    public static double CalculateSimpleInterest(double principal, double rate, int time)
+    {
+        return principal * rate * time / 100;
+    }
+
+    public static double CalculateCompoundInterest(double principal, double rate, int time, int compoundsPerYear)
+    {
+        double amount = principal * Math.Pow(1 + rate / (100 * compoundsPerYear), compoundsPerYear * time);
+        return amount - principal;
+    }
+
+    public static double CalculateMonthlyPayment(double principal, double rate, int years)
+    {
+        double monthlyRate = rate / (12 * 100);
+        int months = years * 12;
+
+        if (monthlyRate == 0)
+            return principal / months;
+
+        return (principal * monthlyRate * Math.Pow(1 + monthlyRate, months)) /
+               (Math.Pow(1 + monthlyRate, months) - 1);
     }
 }
